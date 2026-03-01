@@ -1,20 +1,17 @@
 import os
 from dotenv import load_dotenv
-from openai import OpenAI
+from openai import AzureOpenAI
 
 load_dotenv()
 
-endpoint = os.environ["AZURE_OPENAI_ENDPOINT"]
-api_key = os.environ["AZURE_OPENAI_API_KEY"]
-deployment = os.environ["AZURE_OPENAI_DEPLOYMENT"]
-
-client = OpenAI(
-    api_key=api_key,
-    base_url=endpoint.rstrip("/") + "/openai/v1/",
+client = AzureOpenAI(
+    azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
+    api_key=os.environ["AZURE_OPENAI_API_KEY"],
+    api_version=os.environ["AZURE_OPENAI_API_VERSION"],
 )
 
 resp = client.chat.completions.create(
-    model=deployment,
+    model=os.environ["AZURE_OPENAI_DEPLOYMENT"],
     messages=[{"role": "user", "content": "Say hello in French in one sentence."}],
 )
 
