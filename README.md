@@ -1,7 +1,6 @@
-@"
 # Azure OpenAI Hello (AI-102 practice)
 
-Minimal Python example calling an Azure OpenAI deployment and printing the response.
+Minimal Python examples for calling an Azure OpenAI deployment and printing the response.
 
 ## Files
 
@@ -9,16 +8,31 @@ Minimal Python example calling an Azure OpenAI deployment and printing the respo
   - Chat Completions API example using `AzureOpenAI`
   - Uses `messages=[...]`
 
-- `text1_responses_text.py`
-  - Responses API example using Azure OpenAI v1-style `base_url`
+- `test1_responses_text.py`
+  - Minimal Responses API text example
   - Uses `input="..."`
-  - 
+
+- `test2_responses_text.py`
+  - Responses API invoice extraction from plain text
+  - Returns JSON-style output
+
+- `test3_invoice_pdf.py`
+  - Responses API invoice extraction from PDF
+  - Uploads a PDF file and passes `file_id` with `input_file`
+
+- `invoice.pdf`
+  - Sample invoice PDF for local testing
+
 ## Setup
+
 1) Install packages
-```
+
+```bash
 python -m pip install -U openai python-dotenv
 ```
-2) Create a .env file (DO NOT commit it)
+
+2) Create a `.env` file (**DO NOT commit it**)
+
 ```env
 AZURE_OPENAI_ENDPOINT=https://YOUR_RESOURCE_NAME.openai.azure.com/
 AZURE_OPENAI_API_KEY=YOUR_KEY_HERE
@@ -34,16 +48,29 @@ AZURE_OPENAI_API_VERSION=2025-01-01-preview
 python hello_aoai.py
 ```
 
-### Responses API example
+### Minimal Responses API text example
 
 ```bash
-python text1_responses_text.py
+python test1_responses_text.py
+```
+
+### Responses API invoice text example
+
+```bash
+python test2_responses_text.py
+```
+
+### Responses API invoice PDF example
+
+```bash
+python test3_invoice_pdf.py
 ```
 
 ## Notes
+
 - Use the `*.openai.azure.com` endpoint shown in Azure AI Foundry / Get Started.
 - `hello_aoai.py` uses the Chat Completions API.
-- `text1_responses_text.py` uses the Responses API with:
-  - `base_url = https://YOUR_RESOURCE_NAME.openai.azure.com/openai/v1/`
-- In the Responses API example, the script builds the `base_url` from `AZURE_OPENAI_ENDPOINT`.
+- The Responses API examples use Azure OpenAI v1-style `base_url`.
+- In the PDF example, the script uploads the file first and then sends `file_id` with `input_file`.
+- The sample PDF in this repository is only for practice.
 - Never commit `.env` to GitHub.
